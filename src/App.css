@@ -1,38 +1,62 @@
-.App {
-  text-align: center;
+/* Global */
+.vheight-100 {
+    min-height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.below-nav {
+    padding-top: 5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* Filters and projects */
+.list-group-item {
+    background-color: transparent;
+}
+
+.list-group-item.active {
+    background-color: #52baeb;
+    border-color: #0592d3;
+}
+
+.list-group-item-action:hover {
+    background-color: #92dafc;
+}
+
+.projects-title {
+    margin-top: 2rem;
+}
+
+/* Checkbox for important tasks */
+.custom-checkbox .custom-control-input.important~.custom-control-label::before{
+    border-color: red;
+}
+
+.custom-checkbox .custom-control-input.important:checked~.custom-control-label::before{
+    background-color: red;
   }
+
+.custom-checkbox .custom-control-input.important:focus~.custom-control-label::before{
+    box-shadow:  0 0 0 0.2rem rgb(255, 148, 148);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Add task button */
+.fixed-right-bottom {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 1030;
+    margin: 0 1.5rem 1.5rem 0;
+    border-radius: 50%;
 }
 
-.App-link {
-  color: #61dafb;
+input:invalid {
+    border: 2px solid red;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input:focus:invalid {
+    box-shadow: none;
+}
+
+/* img buttons */
+.img-button:hover {
+    cursor: pointer; 
 }

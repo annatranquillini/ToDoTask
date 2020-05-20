@@ -12,12 +12,12 @@ import ModalBody from './Modal';
 
 
 const classes = [
-  new Class("All", true, null),
-  new Class("Important", false, null),
-  new Class("Today", false, null),
-  new Class("Next 7 Days", false, null),
-  new Class("Private", false, null),
-  new Class("Shared With...", false, null),
+  new Class("All", true, "all"),
+  new Class("Important", false, "important"),
+  new Class("Today", false, "today"),
+  new Class("Next 7 Days", false, "week"),
+  new Class("Private", false, "private"),
+  new Class("Shared With...", false, "shared"),
 ];
 
 
@@ -35,15 +35,15 @@ class App extends React.Component{
 
   activateClass = (cl) => {
     this.setState((state) => {
-      let newClasses = state.classes.map(c => { if (c.name !== cl.name) {return new Class(c.name, false, null) } else {return new Class(c.name, true, null)} });
-      let newProjects = state.projects.map(c => { if (c.name !== cl.name) { return new Class(c.name, false, null) } else {return  new Class(c.name, true, null) }  });
-      //console.log(newClasses);
-      //console.log(newProjects);
+      let newClasses = state.classes.map(c => { if (c.name !== cl.name) { return new Class(c.name, false, c.filter) } else { return new Class(c.name, true, c.filter)} });
+      let newProjects = state.projects.map(c => { if (c.name !== cl.name) { return new Class(c.name, false, c.filter) } else { return new Class(c.name, true, c.filter) }  });
       return { classes: newClasses, projects: newProjects };
     });
   };
 
-  goToThisFilter = (c) => {
+   getFilteredTasks = async (c) => {
+    let newTasks= await Api.getFilteredTasks(c.filter);
+    this.setState({ tasks: newTasks });
     this.activateClass(c);
   }
 
@@ -53,7 +53,7 @@ class App extends React.Component{
         <Toolbar />
         <div className="container-fluid">
           <div className="row vheight-100">
-            <SideBar projects={this.state.projects} classes={this.state.classes} goToThisFilter={this.activateClass}/>
+            <SideBar projects={this.state.projects} classes={this.state.classes} goToThisFilter={this.getFilteredTasks}/>
             <ExamBody tasks={this.state.tasks} />
             <ModalBody visible={this.state.visible} />
           </div>

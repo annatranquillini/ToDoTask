@@ -1,8 +1,8 @@
 class Class {
-    constructor(name, active, func) {
+    constructor(name, active, filter) {
         this.name = name;
         this.active = active;
-        this.func = func;
+        this.filter = filter;
     }
 
     activate() {

@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 
 function ExamBody(props) {
     return <main className="col-sm-8 col-12 below-nav">

@@ -2,18 +2,21 @@ import React from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import moment from 'moment';
 import Task from '../Entities/Task';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 class ModalBody extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.state = { task: props.task, edit: props.edit, show: false };
+            this.state = { ...props.task, edit: props.edit, show: false };
+       
     }
 
     handleShow = () => this.setState({ show: true });
     handleClose = () => this.setState({ show: false });
     insertNewTask = () => { 
-        let t = new Task(6, "new task", true, false, moment("2020-04-18T08:00:00"), "Gastronomia", true);
+        let t = new Task(null, this.state.description, this.state.important, this.state.privateTask, this.state.deadline, this.state.project, this.state.completed);
         this.props.insertNewTask(t);
         this.handleClose();
     };
@@ -25,9 +28,11 @@ class ModalBody extends React.Component {
 
     updateField = (name, value) => {
         this.setState((state) => {
-          //  return { task.{ name }: value };
+            return{[name]: value};
         });
+        console.log(this.state);
     }
+
     render() {
         return (
             <>
@@ -40,28 +45,40 @@ class ModalBody extends React.Component {
                         <Modal.Title>{this.state.edit? "Edit Task": "Create new task"}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-
                         <Form>
                             <Form.Group controlId="description">
                                 <Form.Label>Description</Form.Label>
-                                <Form.Control type="description" placeholder="Enter description" />
+                                <Form.Control type="description" placeholder="Enter description"
+                                    name='description'
+                                    onChange={(ev) => this.updateField(ev.target.name, ev.target.value)}/>
                             </Form.Group>
                             <Form.Check
-                                onChange={(ev) => this.props.updateField(ev.target.name, ev.target.value)}></Form.Check>
-                                type='checkbox'
+                                type="switch"
+                                onChange={(ev) => this.updateField(ev.target.name, ev.target.checked)}
                                 label='important'
                                 id={`important-checkbox`}
+                                name='important'
                             />
                             <Form.Check
-                                type='checkbox'
+                                type="switch"
+                                onChange={(ev) => this.updateField(ev.target.name, ev.target.checked)}
                                 label='private'
                                 id='private-checkbox'
+                                name='privateTask'
                             />
                             <Form.Group controlId="project">
                                 <Form.Label>Project</Form.Label>
-                                <Form.Control type="project" placeholder="Enter porject" />
+                                <Form.Control type="project" placeholder="Enter project name"
+                                    name='project'
+                                    onChange={(ev) => this.updateField(ev.target.name, ev.target.value)}/>
+                                
                             </Form.Group>
-
+                            <DatePicker
+                                label="task deadline"
+                                selected={this.state.deadline}
+                                onChange={(ev) => this.updateField("deadline", ev)}
+                                name='deadline'
+                            />
                         </Form>
 
                     </Modal.Body>

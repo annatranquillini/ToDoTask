@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './App.css';
+import './res/App.css';
 import Api from './Api.js';
 import Class from './Entities/Class.js'
 
@@ -8,8 +8,6 @@ import Toolbar from './Components/Toolbar.js'
 import SideBar from './Components/Sidebar.js'
 import ExamBody from './Components/ExamBody.js'
 import ModalBody from './Components/Modal';
-import Task from './Entities/Task';
-
 
 
 const classes = [

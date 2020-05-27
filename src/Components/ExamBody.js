@@ -17,7 +17,6 @@ function ExamBody(props) {
 }
 
 function ExamTile(props) {
-    console.log(props.task.description.completed)
     return <li className="list-group-item task">
         <div className="d-flex w-100 justify-content-between">
             <div className="p-2 flex-grow-1 bd-highlight">

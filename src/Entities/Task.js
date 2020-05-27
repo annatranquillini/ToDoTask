@@ -7,16 +7,30 @@ class Task {
             this.id = id;
 
         this.description = description;
-        this.important = important;
-        this.privateTask = privateTask;
+        if (important == null)
+            this.important = false;
+        else
+            this.important = important;
+        
+        if (privateTask == null)
+            this.privateTask = false;
+        else
+            this.privateTask = privateTask;
 
-        if (deadline)
+        if (completed == null)
+            this.completed = false;
+        else
+            this.completed = completed;
+        
+        if (deadline==null)
+            this.deadline = moment();
+        else    
             this.deadline = moment(deadline);
-        if (project)
+        
+        if (project == null)
+            this.project = "";
+        else
             this.project = project;
-
-        this.completed = completed || false;
-
     }
 
     /**

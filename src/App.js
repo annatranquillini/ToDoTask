@@ -2,12 +2,13 @@ import React from 'react';
 
 import './App.css';
 import Api from './Api.js';
-import Class from './Class.js'
+import Class from './Entities/Class.js'
 
-import Toolbar from './Toolbar.js'
-import SideBar from './Sidebar.js'
-import ExamBody from './ExamBody.js'
-import ModalBody from './Modal';
+import Toolbar from './Components/Toolbar.js'
+import SideBar from './Components/Sidebar.js'
+import ExamBody from './Components/ExamBody.js'
+import ModalBody from './Components/Modal';
+import Task from './Entities/Task';
 
 
 
@@ -45,7 +46,26 @@ class App extends React.Component{
     let newTasks= await Api.getFilteredTasks(c.filter);
     this.setState({ tasks: newTasks });
     this.activateClass(c);
-  }
+   }
+  
+  insertNewTask = (t) => {
+    this.setState((state)=>{
+      return {tasks: state.tasks.concat( t)}
+    }) 
+  };
+
+
+  updateTask = (task) => {
+    this.setState((state) => {
+     let newTasks = state.tasks.map(t => {
+        if (t.id === task.id)
+          return task;
+        else
+          return t;
+      })
+      return { tasks: newTasks }
+    })
+  };
 
   render() {
     return (
@@ -54,8 +74,9 @@ class App extends React.Component{
         <div className="container-fluid">
           <div className="row vheight-100">
             <SideBar projects={this.state.projects} classes={this.state.classes} goToThisFilter={this.getFilteredTasks}/>
-            <ExamBody tasks={this.state.tasks} />
-            <ModalBody visible={this.state.visible} />
+            <ExamBody tasks={this.state.tasks}>
+              <ModalBody task={null} edit={false} insertNewTask={this.insertNewTask} updateTask={this.updateTask}/>
+            </ExamBody> 
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ function ExamBody(props) {
         </ul>
         <div id='errorMsg'>
         </div>
-        <button type="button" id="addButton" className="btn btn-lg btn-info fixed-right-bottom" data-toggle="modal" data-target="#modal">&#43;</button>
+        {props.children}
 
     </main>
 }

@@ -1,6 +1,6 @@
-import Task from './Task.js';
+import Task from './Entities/Task.js';
 import moment from 'moment';
-import Class from './Class.js';
+import Class from './Entities/Class.js';
 
 const fakeTasks = [
     new Task(1, "Eat sushi", true, false, moment("2020-05-22T08:00:00"), "Gastronomia", false),

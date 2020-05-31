@@ -16,7 +16,7 @@ app.use(express.json());
 // REST API endpoints
 
 //GET /tasks
-app.get('/tasks', (req, res) => {
+app.get('/api/tasks', (req, res) => {
     dao.getTasks(req.query.filter)
         .then((tasks) => {
             res.json(tasks);
@@ -29,7 +29,7 @@ app.get('/tasks', (req, res) => {
 });
 
 //GET /tasks/<taskId>
-app.get('/tasks/:taskId', (req, res) => {
+app.get('/api/tasks/:taskId', (req, res) => {
     dao.getTask(req.params.taskId)
         .then((course) => {
             if(!course){
@@ -46,7 +46,7 @@ app.get('/tasks/:taskId', (req, res) => {
 });
 
 //POST /tasks
-app.post('/tasks', (req,res) => {
+app.post('/api/tasks', (req,res) => {
     const task = req.body;
     if(!task){
         res.status(400).end();
@@ -60,7 +60,7 @@ app.post('/tasks', (req,res) => {
 });
 
 //DELETE /tasks/<taskId>
-app.delete('/tasks/:taskId', (req,res) => {
+app.delete('/api/tasks/:taskId', (req,res) => {
     dao.deleteTask(req.params.taskId)
         .then((result) => res.status(204).end())
         .catch((err) => res.status(500).json({
@@ -69,7 +69,7 @@ app.delete('/tasks/:taskId', (req,res) => {
 });
 
 //PUT /tasks/<taskId>
-app.put('/tasks/:taskId', (req,res) => {
+app.put('/api/tasks/:taskId', (req,res) => {
     if(!req.body.id){
         res.status(400).end();
     } else {

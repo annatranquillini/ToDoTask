@@ -36,73 +36,92 @@ const isNextWeek = function (date) {
 }
 //GET
 
-async function getTasks() {
-    return fakeTasks;
+async function getTasks(filter) {
+    let url = "/api/tasks";
+    if (filter) {
+        const queryParams = "?filter=" + filter;
+        url += queryParams;
+    }
+    console.log(url);
+    const response = await fetch(url);
+    const tasksJson = await response.json();
+    if (response.ok) {
+        return tasksJson.map((t) => Task.from(t));
+    } else {
+        throw "Error";  // An object with the error coming from the server
+    }
 }
 
 async function getProjects() {
-    return fakeProjects;
+    let projects = await getTasks();
+    return projects.map(t => new Class(t.project, false, t.project)).filter((value, index, self) => self.map(v => v.name).indexOf(value.name) === index);
 }
 
-async function getFilteredTasks(filter) {
-    var tasks = [];
-    switch (filter) {
-        case "all":
-            tasks = fakeTasks;
-            break;
-        case "important":
-            tasks = fakeTasks.filter((el) => {
-                return el.important;
-            });
-            break;
-        case "private":
-            tasks = fakeTasks.filter((el) => {
-                return el.privateTask;
-            });
-            break;
-        case "shared":
-            tasks = fakeTasks.filter((el) => {
-                return !el.privateTask;
-            });
-            break;
-        case "today":
-            tasks = fakeTasks.filter((el) => {
-                if (el.deadline)
-                    return isToday(el.deadline);
-                else
-                    return false;
-            });
-            break;
-        case "week":
-            tasks = fakeTasks.filter((el) => {
-                if (el.deadline)
-                    return isNextWeek(el.deadline);
-                else
-                    return false;
-            });
-            break;
-        default:
-            //try to filter by project
-            tasks = fakeTasks.filter((el) => {
-                return el.project === filter;
-            });
-    }
-    return tasks;
-}
 
 //POST
-async function insertNewTask(task) { 
-    fakeTasks.push(task);
+async function insertNewTask(task) {
+    return new Promise((resolve, reject) => {
+        fetch('/api/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(task),
+        }).then( (response) => {
+            if(response.ok) {
+                resolve(null);
+            } else {
+                // analyze the cause of error
+                response.json()
+                .then( (obj) => {reject(obj);} ) // error msg in the response body
+                .catch( (err) => {reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch( (err) => {reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
 }
 
 //PUT
-async function updateTask() { }
+async function updateTask(task) {
+    return new Promise((resolve, reject) => {
+        fetch('/api/tasks/' + task.id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(task),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(null);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+ }
 
 //DELETE
-async function deleteTask() { }
+async function deleteTask(taskIId) { 
+    return new Promise((resolve, reject) => {
+        fetch('/api/tasks/' + taskIId, {
+            method: 'DELETE'
+        }).then((response) => {
+            if (response.ok) {
+                resolve(null);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
 
 
 
-const Api = { getTasks, getProjects, getFilteredTasks, insertNewTask, deleteTask, updateTask };
+const Api = { getTasks, getProjects, getTasks, insertNewTask, deleteTask, updateTask };
 
 export default Api;

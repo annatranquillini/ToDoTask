@@ -11,7 +11,7 @@ import ModalBody from './Components/Modal';
 import { Button} from 'react-bootstrap';
 
 const classes = [
-  new Class("All", true, "all"),
+  new Class("All", true, null),
   new Class("Important", false, "important"),
   new Class("Today", false, "today"),
   new Class("Next 7 Days", false, "week"),
@@ -40,19 +40,21 @@ class App extends React.Component{
     });
   };
 
-   getFilteredTasks = async (c) => {
-    let newTasks= await Api.getFilteredTasks(c.filter);
+   getFilteredTasks = async (filter) => {
+    let newTasks= await Api.getTasks(filter);
     this.setState({ tasks: newTasks });
-    this.activateClass(c);
+    //this.activateClass(filter);
    }
   
-  insertNewTask = (t) => {
+  insertNewTask = async (t) => {
+    await Api.insertNewTask(t);
     this.setState((state)=>{
       return {tasks: state.tasks.concat( t)}
     }) 
   };
 
-  updateTask = (task) => {
+  updateTask = async (task) => {
+    await Api.updateTask(task);
     this.setState((state) => {
      let newTasks = state.tasks.map(t => {
         if (t.id === task.id)
@@ -70,7 +72,8 @@ class App extends React.Component{
     })
   }
 
-  deleteTask = (task) => {
+  deleteTask =async (task) => {
+    await Api.deleteTask(task.id);
     this.setState((state) => {
       let newTasks = state.tasks.filter(t => t.id !== task.id);
       return { tasks: newTasks }

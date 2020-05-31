@@ -2,6 +2,7 @@
   "name": "lab7",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -13,8 +14,7 @@
     "react-bootstrap-datetimepicker": "0.0.22",
     "react-datepicker": "^1.8.0",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "proxy": "http://localhost:3001"
+    "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "BROWSER=none react-scripts start",

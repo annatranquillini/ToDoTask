@@ -78,8 +78,10 @@ exports.getTasks = function(filter) {
                             });
                             break;
                         default:
-                            //the specified filter is not valid
-                            tasks = []
+                            tasks = tasks.filter((el) => {
+                                if (el.project) { return el.project === filter }
+                                return false
+                            });
                     }
                 }
                 resolve(tasks);

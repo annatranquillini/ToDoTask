@@ -34,7 +34,7 @@ const isNextWeek = function (date) {
     const tomorrow = moment().add(1, 'days');
     return date.isAfter(tomorrow) && date.isBefore(nextWeek);
 }
-
+//GET
 
 async function getTasks() {
     return fakeTasks;
@@ -90,11 +90,18 @@ async function getFilteredTasks(filter) {
     return tasks;
 }
 
-async function insertNewTask() { }
+//POST
+async function insertNewTask(task) { 
+    fakeTasks.push(task);
+}
 
+//PUT
+async function updateTask() { }
+
+//DELETE
 async function deleteTask() { }
 
-async function updateTask() { }
+
 
 const Api = { getTasks, getProjects, getFilteredTasks, insertNewTask, deleteTask, updateTask };
 

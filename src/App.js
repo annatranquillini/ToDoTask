@@ -8,7 +8,7 @@ import Toolbar from './Components/Toolbar.js'
 import SideBar from './Components/Sidebar.js'
 import ExamBody from './Components/ExamBody.js'
 import ModalBody from './Components/Modal';
-
+import { Button} from 'react-bootstrap';
 
 const classes = [
   new Class("All", true, "all"),
@@ -25,7 +25,7 @@ class App extends React.Component{
   constructor(props) {
     super(props);
 
-    this.state = { tasks: [], projects: [], classes: classes,visible: false};
+    this.state = { tasks: [], projects: [], classes: classes,edit: false, task: null, show:false};
   }
   componentDidMount() {
     Api.getTasks().then((ex) => this.setState({ tasks: ex }));
@@ -52,7 +52,6 @@ class App extends React.Component{
     }) 
   };
 
-
   updateTask = (task) => {
     this.setState((state) => {
      let newTasks = state.tasks.map(t => {
@@ -65,6 +64,29 @@ class App extends React.Component{
     })
   };
 
+  openEditModal = (task) => {
+    this.setState((state) => {
+      return {edit: true, task:task,show:true}
+    })
+  }
+
+  deleteTask = (task) => {
+    this.setState((state) => {
+      let newTasks = state.tasks.filter(t => t.id !== task.id);
+      return { tasks: newTasks }
+    })
+  };
+
+  openNewTaskModal = () => {
+    this.setState({ show: true , edit:false, task:null});
+  }
+  
+
+  hideModal = () => {
+    this.setState({ show: false });
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -72,8 +94,11 @@ class App extends React.Component{
         <div className="container-fluid">
           <div className="row vheight-100">
             <SideBar projects={this.state.projects} classes={this.state.classes} goToThisFilter={this.getFilteredTasks}/>
-            <ExamBody tasks={this.state.tasks}>
-              <ModalBody task={null} edit={false} insertNewTask={this.insertNewTask} updateTask={this.updateTask}/>
+            <ExamBody tasks={this.state.tasks} deleteTask={this.deleteTask} editTask={this.openEditModal}>
+              <Button variant="info" size="lg" className="fixed-right-bottom" onClick={this.openNewTaskModal}>
+                +
+                 </Button>
+              {this.state.show && <ModalBody task={this.state.task} edit={this.state.edit} insertNewTask={this.insertNewTask} updateTask={this.updateTask} hideModal={this.hideModal}/>}
             </ExamBody> 
           </div>
         </div>

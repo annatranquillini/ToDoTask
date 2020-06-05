@@ -6,7 +6,7 @@ function ExamBody(props) {
         <ul className="list-group list-group-flush" id="taskList">
             {
                 props.tasks.map(t =>
-                    < ExamTile task={t} key={t.id} deleteTask={props.deleteTask} editTask={props.editTask} />)
+                    < ExamTile task={t} key={t.id} deleteTask={props.deleteTask} editTask={props.editTask} toggleTask={props.toggleTask}/>)
             }
         </ul>
         <div id='errorMsg'>
@@ -23,8 +23,8 @@ function ExamTile(props) {
                 <Form.Check
                     type='checkbox'
                     label={props.task.description}
-                    checked={props.task.completed}
-                    onClick={()=> props.task.completed=!props.task.completed}
+                    defaultChecked={props.task.completed}
+                    onClick={()=> props.toggleTask(props.task)}
                 />
             </Row>
             <Row className="p-2 flex-grow-1 bd-highlight">

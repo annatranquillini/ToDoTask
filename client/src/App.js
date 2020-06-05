@@ -94,6 +94,10 @@ class App extends React.Component{
     this.setState({ show: false });
   }
 
+  toggleTask = async (t) => {
+    t.completed = !t.completed;
+    await Api.updateTask(t);
+  }
 
   render() {
     return (
@@ -102,7 +106,7 @@ class App extends React.Component{
         <div className="container-fluid">
           <div className="row vheight-100">
             <SideBar projects={this.state.projects} classes={this.state.classes} goToThisFilter={this.getFilteredTasks}/>
-            <ExamBody tasks={this.state.tasks} deleteTask={this.deleteTask} editTask={this.openEditModal}>
+            <ExamBody tasks={this.state.tasks} deleteTask={this.deleteTask} editTask={this.openEditModal} toggleTask={this.toggleTask}>
               <Button variant="info" size="lg" className="fixed-right-bottom" onClick={this.openNewTaskModal}>
                 +
                  </Button>

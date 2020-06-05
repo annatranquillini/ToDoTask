@@ -2,38 +2,6 @@ import Task from './Entities/Task.js';
 import moment from 'moment';
 import Class from './Entities/Class.js';
 
-const fakeTasks = [
-    new Task(1, "Eat sushi", true, false, moment("2020-05-22T08:00:00"), "Gastronomia", false),
-    new Task(2, "Dance", false, true, moment("2020-04-18T08:00:00"), "Cucina", false),
-    new Task(3, "Study swedisch", true, false, moment("2020-04-18T08:00:00"), "Fantasia", false),
-    new Task(4, "Coding", true, false, moment("2020-04-18T08:00:00"), "Gastronomia", true),
-];
-
-const fakeProjects = fakeTasks.map(t => new Class(t.project, false, t.project)).filter((value, index, self) => self.map(v => v.name).indexOf(value.name) === index);
-
-// value -> il valore dell'elemento
-// index -> l'indice dell'elemento
-// self -> l' Array oggetto da passare
-
-
-
-/**
-* Function to check if a date is today. Returns true if the date is today, false otherwise.
-* @param {*} date a Moment js date to be checked
-*/
-const isToday = function (date) {
-    return date.isSame(moment(), 'day');
-}
-
-/**
-* Function to check if a date is in the next week. Returns true if the date is in the next week, false otherwise.
-* @param {*} date a Moment js Date to be checked
-*/
-const isNextWeek = function (date) {
-    const nextWeek = moment().add(1, 'weeks');
-    const tomorrow = moment().add(1, 'days');
-    return date.isAfter(tomorrow) && date.isBefore(nextWeek);
-}
 //GET
 
 async function getTasks(filter) {
@@ -56,6 +24,10 @@ async function getProjects() {
     let projects = await getTasks();
     return projects.map(t => new Class(t.project, false, t.project)).filter((value, index, self) => self.map(v => v.name).indexOf(value.name) === index);
 }
+
+// value -> il valore dell'elemento
+// index -> l'indice dell'elemento
+// self -> l' Array oggetto da passare
 
 
 //POST

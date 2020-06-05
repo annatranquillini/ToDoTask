@@ -24,13 +24,14 @@ function ExamTile(props) {
                     type='checkbox'
                     label={props.task.description}
                     checked={props.task.completed}
+                    onClick={()=> props.task.completed=!props.task.completed}
                 />
             </Row>
             <Row className="p-2 flex-grow-1 bd-highlight">
-                <Badge
+                {props.task.project && <Badge
                     className="p-2 bd-highlight  m-1"
                     variant='info'
-                    pill> {props.task.project}</Badge>
+                    pill> {props.task.project}</Badge>}
                 <div className="p-2 bd-highlight deadline"> {props.task.deadline.format("dddd, MMMM Do YYYY")}</div>
             </Row>
             <Button

@@ -43,13 +43,14 @@ class App extends React.Component{
    getFilteredTasks = async (filter) => {
     let newTasks= await Api.getTasks(filter);
     this.setState({ tasks: newTasks });
-    //this.activateClass(filter);
+   // this.activateClass(filter);
    }
   
   insertNewTask = async (t) => {
     await Api.insertNewTask(t);
-    this.setState((state)=>{
-      return {tasks: state.tasks.concat( t)}
+    this.setState((state) => {
+      let newProjects = state.tasks.concat(t).map(t => new Class(t.project, false, t.project)).filter((value, index, self) => self.map(v => v.name).indexOf(value.name) === index);
+      return {tasks: state.tasks.concat( t), projects: newProjects}
     }) 
   };
 
@@ -61,8 +62,10 @@ class App extends React.Component{
           return task;
         else
           return t;
-      })
-      return { tasks: newTasks }
+     })
+      let newProjects = newTasks.map(t => new Class(t.project, false, t.project)).filter((value, index, self) => self.map(v => v.name).indexOf(value.name) === index);
+
+      return { tasks: newTasks, projects: newProjects }
     })
   };
 
@@ -76,7 +79,9 @@ class App extends React.Component{
     await Api.deleteTask(task.id);
     this.setState((state) => {
       let newTasks = state.tasks.filter(t => t.id !== task.id);
-      return { tasks: newTasks }
+      let newProjects = newTasks.map(t => new Class(t.project, false, t.project)).filter((value, index, self) => self.map(v => v.name).indexOf(value.name) === index);
+
+      return { tasks: newTasks, projects: newProjects }
     })
   };
 

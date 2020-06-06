@@ -1,4 +1,4 @@
-##ToDoTask prject
+## ToDoTask project
 
 This project contains the lab10 solution for the ToDoTask assignment. The assignment was developed for the course of Web Application 1 at Politecnico di Torino (2019/2020) by Anna Tranquillini.
 It will be developed in phases, in several weeks, to illustrate the different features of the framework.

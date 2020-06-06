@@ -4,11 +4,12 @@ import './res/App.css';
 import Api from './Api.js';
 import Class from './Entities/Class.js'
 
-import Toolbar from './Components/Toolbar.js'
-import SideBar from './Components/Sidebar.js'
-import ExamBody from './Components/ExamBody.js'
+import Toolbar from './Components/Toolbar.js';
+import SideBar from './Components/Sidebar.js';
+import ExamBody from './Components/ExamBody.js';
 import ModalBody from './Components/Modal';
-import { Button} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const classes = [
   new Class("All", true, null),
@@ -18,6 +19,7 @@ const classes = [
   new Class("Private", false, "private"),
   new Class("Shared With...", false, "shared"),
 ];
+
 
 
 class App extends React.Component{

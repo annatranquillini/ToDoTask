@@ -1,5 +1,8 @@
 import React from 'react';
-import { Badge, Button, Form, Row, Container } from 'react-bootstrap';
+import { Badge, Button, Form, Row,  } from 'react-bootstrap';
+
+import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom';
+
 function ExamBody(props) {
     return <main className="col-sm-8 col-12 below-nav">
         <h1 id="filter-title">All</h1>
@@ -34,13 +37,15 @@ function ExamTile(props) {
                     pill> {props.task.project}</Badge>}
                 <div className="p-2 bd-highlight deadline"> {props.task.deadline.format("dddd, MMMM Do YYYY")}</div>
             </Row>
-            <Button
-                className="m-1"
-                variant="warning"
-                size="sm"
-                onClick={() => props.editTask(props.task)}>
-                Edit
+            <Link to="/add">
+                <Button
+                    className="m-1"
+                    variant="warning"
+                    size="sm"
+                    onClick={() => props.editTask(props.task)}>
+                    Edit
                 </Button>
+            </Link>
             <Button
                 className="m-1"
                 variant="danger"

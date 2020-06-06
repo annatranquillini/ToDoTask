@@ -38,7 +38,7 @@ const isNextWeek = function (date) {
 
 async function getTasks(filter) {
     let url = "/api/tasks";
-    if (filter) {
+    if (filter && filter!="all") {
         const queryParams = "?filter=" + filter;
         url += queryParams;
     }

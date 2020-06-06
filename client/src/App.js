@@ -12,7 +12,7 @@ import { Button, Row, Container } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 const classes = [
-  new Class("All", true, null),
+  new Class("All", true, ""),
   new Class("Important", false, "important"),
   new Class("Today", false, "today"),
   new Class("Next 7 Days", false, "week"),

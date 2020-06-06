@@ -3,7 +3,7 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import Task from '../Entities/Task';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom';
+import {  Redirect } from 'react-router-dom';
 
 class ModalBody extends React.Component {
 
@@ -40,9 +40,8 @@ class ModalBody extends React.Component {
     }
 
     render() {
-        console.log(this.state.deadline);
         if (this.state.submitted) {
-            return <Redirect to="/"></Redirect>
+            return <Redirect to='/'/>
         }
         else {
             return (

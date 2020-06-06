@@ -72,9 +72,8 @@ class App extends React.Component {
   };
 
   openEditModal = (task) => {
-    this.setState((state) => {
-      return { edit: true, task: task }
-    })
+    this.setState(
+      { task: task })
   }
 
   deleteTask = async (task) => {
@@ -92,17 +91,6 @@ class App extends React.Component {
     await Api.updateTask(t);
   }
 
-
-  openNewTaskModal = () => {
-    this.setState({ show: true, edit: false, task: null });
-  }
-
-
-  hideModal = () => {
-    this.setState({ show: false });
-  }
-
-
   render() {
     return (
       <Router>
@@ -116,14 +104,16 @@ class App extends React.Component {
                 <SideBar projects={this.state.projects} classes={this.state.classes} goToThisFilter={this.getFilteredTasks} />
                 <ExamBody tasks={this.state.tasks} deleteTask={this.deleteTask} editTask={this.openEditModal} toggleTask={this.toggleTask}>
                   <Link to={'/add'}>
-                    <Button variant="info" size="lg" className="fixed-right-bottom" onClick={this.openNewTaskModal}>
+                    <Button variant="info" size="lg" className="fixed-right-bottom">
                       +
-                 </Button>
+                   </Button>
                   </Link>
-     
-                  <Route path="/add">
-                    <ModalBody task={this.state.task} edit={this.state.edit} insertNewTask={this.insertNewTask} updateTask={this.updateTask} />
-                  </Route>      
+                  <Route exact path="/add">
+                    <ModalBody task={this.state.task} edit={false} insertNewTask={this.insertNewTask} />
+                  </Route>
+                  <Route exact path="/edit">
+                    <ModalBody task={this.state.task} edit={true} updateTask={this.updateTask} />
+                  </Route>
                 </ExamBody>
               </Row>
             </Container>

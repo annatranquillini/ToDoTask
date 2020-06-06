@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge, Button, Form, Row,  } from 'react-bootstrap';
 
-import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 
 function ExamBody(props) {
     return <main className="col-sm-8 col-12 below-nav">
@@ -37,7 +37,7 @@ function ExamTile(props) {
                     pill> {props.task.project}</Badge>}
                 <div className="p-2 bd-highlight deadline"> {props.task.deadline.format("dddd, MMMM Do YYYY")}</div>
             </Row>
-            <Link to="/add">
+            <Link to={'/edit'}>
                 <Button
                     className="m-1"
                     variant="warning"

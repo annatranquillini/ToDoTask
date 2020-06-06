@@ -87,6 +87,12 @@ class App extends React.Component {
     })
   };
 
+  toggleTask = async (t) => {
+    t.completed = !t.completed;
+    await Api.updateTask(t);
+  }
+
+
   openNewTaskModal = () => {
     this.setState({ show: true, edit: false, task: null });
   }
@@ -108,7 +114,7 @@ class App extends React.Component {
             <Container className="container-fluid">
               <Row >
                 <SideBar projects={this.state.projects} classes={this.state.classes} goToThisFilter={this.getFilteredTasks} />
-                <ExamBody tasks={this.state.tasks} deleteTask={this.deleteTask} editTask={this.openEditModal}>
+                <ExamBody tasks={this.state.tasks} deleteTask={this.deleteTask} editTask={this.openEditModal} toggleTask={this.toggleTask}>
                   <Link to={'/add'}>
                     <Button variant="info" size="lg" className="fixed-right-bottom" onClick={this.openNewTaskModal}>
                       +
